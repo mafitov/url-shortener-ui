@@ -34,7 +34,7 @@ const App: React.FC = () => {
         setLoading(true);
 
         try {
-            const response = await fetch("https://8m4dk7ug52.execute-api.eu-central-1.amazonaws.com", {
+            const response = await fetch("https://u9yancoum7.execute-api.eu-central-1.amazonaws.com/urls", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ longUrl: longUrl }),

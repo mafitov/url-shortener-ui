@@ -11,6 +11,7 @@ This application allows users to input a long URL and receive a shortened versio
 - Error & loading state management
 - TypeScript for type safety and better DX
 - Easily connectable to any backend (AWS Lambda, Express, etc.)
+- Deployment to AWS S3
 
 ## Tech Stack
 
@@ -38,27 +39,37 @@ src/
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/url-shortener.git
-   cd url-shortener
+   git clone https://github.com/yourusername/url-shortener-ui.git
+   cd url-shortener-ui
    ```
 
 2. **Install dependencies:**
 
    ```bash
    npm install
-   # or
-   yarn install
    ```
 
 3. **Run the development server:**
 
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
 4. **Open in browser:**
    ```
    http://localhost:5173
+   ```
+
+## Deployment
+
+1. **Build the application:**
+
+   ```bash
+   npm build
+   ```
+
+2. **Deploy to AWS S3:**
+
+   ```bash
+   sls deploy
    ```

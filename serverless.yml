@@ -1,0 +1,42 @@
+service: url-shortener-ui
+frameworkVersion: '3'
+package:
+    individually: true
+plugins:
+    - serverless-s3-sync
+provider:
+    name: aws
+    stage: dev
+    region: eu-central-1
+    environment:
+        URL_BUCKET: ${self:service}-${sls:stage}-urls
+resources:
+    Resources:
+        URLBucket:
+            Type: AWS::S3::Bucket
+            Properties:
+                BucketName: ${self:provider.environment.URL_BUCKET}
+                PublicAccessBlockConfiguration:
+                    BlockPublicAcls: false
+                    BlockPublicPolicy: false
+                    IgnorePublicAcls: false
+                    RestrictPublicBuckets: false
+                WebsiteConfiguration:
+                    IndexDocument: index.html
+        BucketPolicy:
+            Type: AWS::S3::BucketPolicy
+            Properties:
+                Bucket:
+                    Ref: URLBucket
+                PolicyDocument:
+                    Statement:
+                        -   Action:
+                                - 's3:GetObject'
+                            Effect: Allow
+                            Principal: '*'
+                            Resource:
+                                -   Fn::Join: [ '/', [ Fn::GetAtt: [ URLBucket, Arn ], '*' ] ]
+custom:
+    s3Sync:
+        - bucketName: ${self:provider.environment.URL_BUCKET}
+          localDir: build
